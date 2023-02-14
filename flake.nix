@@ -10,10 +10,10 @@
     pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
   in
     with lib; {
-      wallpapers = pkgs.callPackage ./pkg.nix {};
+      rofi-wallpaper = pkgs.callPackage ./pkg.nix {};
       swww = pkgs.callPackage ./swww.nix {};
       overlay = final: prev: {
-        wallpapers = self.wallpapers;
+        rofi-wallpaper = self.wallpapers;
         swww = self.swww;
       };
       homeManagerModules.default = import ./hmModule.nix self;

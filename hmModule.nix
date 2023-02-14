@@ -16,6 +16,12 @@ in
         description = "wallpaper command";
       };
 
+      customDir = mkOption {
+        default = "../wallpapers";
+        type = types.nullOr types.str;
+        description = "change wallpaper directory";
+      };
+
       background = mkOption {
         default = "#323D43FF";
         type = types.nullOr types.str;
@@ -70,7 +76,7 @@ in
 
     config = mkIf cfg.enable {
       home.packages = let
-        wallpaper-final = self.wallpapers.overrideAttrs (oldAttrs: rec {
+        wallpaper-final = self.rofi-wallpaper.overrideAttrs (oldAttrs: rec {
           installPhase =
             oldAttrs.installPhase
             + ''
@@ -83,7 +89,8 @@ in
                 --replace "#E67E80FF" "${cfg.urgent}" \
                 --replace "JetBrainsMono Nerd Font 9" "${cfg.font}"
               substituteInPlace $out/share/rofi/script/rofi-modi \
-                --replace "swww img" "${cfg.customCommand}"
+                --replace "swww img" "${cfg.customCommand}" \
+                --replace "../wallpapers" "${cfg.customDir}" 
             '';
         });
       in

@@ -3,8 +3,11 @@
 a flake for my wallpapers and some wallpaper related utils for nixos.
 
 ### Packages
-+ **[Swww](https://github.com/Horus645/swww)**: wallpaper daemon for wayland
-+ **wallpapers**: wallpapers with custom rofi script for changing wallpapers
+
+- **[Swww](https://github.com/Horus645/swww)**: wallpaper daemon for wayland
+- **rofi-wallpaper**: wallpapers with custom rofi script for changing wallpapers
+
+![](/rofi/sample.png)
 
 ### Flake Usage
 
@@ -31,10 +34,36 @@ a flake for my wallpapers and some wallpaper related utils for nixos.
   };
 }
 ```
+
 then
+
 ```
 environment.systemPackages = with pkgs; [
     swww
-    wallpapers
+    rofi-wallpaper
 ];
+```
+
+### Home manager options
+
+```
+modules = [
+    wall-utils.homeManagerModules.default
+    {
+        programs.wall-utils = {
+            enable = true;
+            swww.enable = true;
+            customCommand = "swww img";
+            customDir = "$HOME/wallpapers";
+            background = "#323D43FF";
+            background-alt = "#3C474DFF";
+            foreground = "#DAD1BEFF";
+            selected = "#7FBBB3FF";
+            active = "#A7C080FF";
+            urgent = "#E67E80FF";
+            font = "RobotoMono Nerd Font 9";
+        };
+    }
+];
+
 ```
