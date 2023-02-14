@@ -13,7 +13,7 @@
       rofi-wallpaper = pkgs.callPackage ./pkg.nix {};
       swww = pkgs.callPackage ./swww.nix {};
       overlay = final: prev: {
-        rofi-wallpaper = self.wallpapers;
+        rofi-wallpaper = self.rofi-wallpaper;
         swww = self.swww;
       };
       homeManagerModules.default = import ./hmModule.nix self;
