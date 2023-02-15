@@ -5,6 +5,26 @@ self: {
   ...
 }: let
   cfg = config.programs.wall-utils;
+
+  wallpaper-final = self.rofi-wallpaper.overrideAttrs (oldAttrs: rec {
+    installPhase =
+      oldAttrs.installPhase
+      + ''
+        substituteInPlace $out/share/rofi/themes/wallpaper.rasi \
+          --replace "#323D43FF" "${cfg.background}" \
+          --replace "#3C474DFF" "${cfg.background-alt}" \
+          --replace "#DAD1BEFF" "${cfg.foreground}" \
+          --replace "#7FBBB3FF" "${cfg.selected}" \
+          --replace "#A7C080FF" "${cfg.active}" \
+          --replace "#E67E80FF" "${cfg.urgent}" \
+          --replace "JetBrainsMono Nerd Font 9" "${cfg.font}"
+        substituteInPlace $out/share/rofi/script/rofi-modi \
+          --replace "swww img" "${cfg.customCommand}"
+
+        sed -i "5 s%.*%CUR_DIR=${cfg.customDir}%" $out/share/rofi/script/rofi-modi
+
+      '';
+  });
 in
   with lib; {
     options.programs.wall-utils = {
@@ -17,8 +37,9 @@ in
       };
 
       customDir = mkOption {
-        default = "../wallpapers";
+        default = "$out/share/wallpapers";
         type = types.nullOr types.str;
+        apply = toString;
         description = "change wallpaper directory";
       };
 
@@ -75,27 +96,9 @@ in
     };
 
     config = mkIf cfg.enable {
-      home.packages = let
-        wallpaper-final = self.rofi-wallpaper.overrideAttrs (oldAttrs: rec {
-          installPhase =
-            oldAttrs.installPhase
-            + ''
-              substituteInPlace $out/share/rofi/themes/wallpaper.rasi \
-                --replace "#323D43FF" "${cfg.background}" \
-                --replace "#3C474DFF" "${cfg.background-alt}" \
-                --replace "#DAD1BEFF" "${cfg.foreground}" \
-                --replace "#7FBBB3FF" "${cfg.selected}" \
-                --replace "#A7C080FF" "${cfg.active}" \
-                --replace "#E67E80FF" "${cfg.urgent}" \
-                --replace "JetBrainsMono Nerd Font 9" "${cfg.font}"
-              substituteInPlace $out/share/rofi/script/rofi-modi \
-                --replace "swww img" "${cfg.customCommand}" \
-                --replace "$HOME/Pictures" "${cfg.customDir}" 
-            '';
-        });
-      in
+      home.packages =
         [
-          wallpaper-final
+            wallpaper-final
         ]
         ++ lib.optionals cfg.swww.enable [cfg.swww.package];
     };

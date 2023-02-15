@@ -59,7 +59,7 @@ inputbar {
     border-color:                @selected;
     background-color:            @background-alt;
     text-color:                  @foreground;
-    children:                    [ "textbox-prompt-colon","prompt", "entry" ];
+    children:                    [ "textbox-prompt-colon" , "entry" ];
 }
 
 prompt {

@@ -2,7 +2,7 @@
 
 EDITOR="swww img"
 
-CUR_DIR=$HOME/Pictures
+CUR_DIR=../wallpapers
 
 PREV_LOC_FILE=$HOME/.cache/.rofi_prev_loc
 
