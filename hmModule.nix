@@ -90,7 +90,7 @@ in
                 --replace "JetBrainsMono Nerd Font 9" "${cfg.font}"
               substituteInPlace $out/share/rofi/script/rofi-modi \
                 --replace "swww img" "${cfg.customCommand}" \
-                --replace "../wallpapers" "${cfg.customDir}" 
+                --replace "$HOME/Pictures" "${cfg.customDir}" 
             '';
         });
       in

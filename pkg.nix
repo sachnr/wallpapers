@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
       --replace "theme=./wallpaper.rasi" "theme=$out/share/rofi/themes/wallpaper.rasi"
 
     substituteInPlace $out/share/rofi/script/rofi-modi \
-      --replace "CUR_DIR=../wallpapers" "CUR_DIR=$out/share/wallpapers"
+      --replace "CUR_DIR=''$HOME/Pictures" "CUR_DIR=$out/share/wallpapers"
 
       ln --symbolic $out/share/rofi/script/rofi-wallpaper $out/bin/rofi-wallpaper
   '';
