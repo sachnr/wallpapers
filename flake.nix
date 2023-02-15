@@ -11,10 +11,10 @@
   in
     with lib; {
       rofi-wallpaper = pkgs.callPackage ./pkg.nix {};
-      swww = pkgs.callPackage ./swww.nix {};
+      # swww = pkgs.callPackage ./swww.nix {};
       overlay = final: prev: {
         rofi-wallpaper = self.rofi-wallpaper;
-        swww = self.swww;
+        # swww = self.swww;
       };
       homeManagerModules.default = import ./hmModule.nix self;
     };

@@ -84,21 +84,12 @@ in
         type = types.nullOr types.str;
         description = "font for rofi";
       };
-
-      swww = {
-        enable = mkEnableOption "swww, a solution to your wayland wallpaper woes";
-
-        package = mkOption {
-          type = types.package;
-          default = self.swww;
-        };
-      };
     };
 
     config = mkIf cfg.enable {
       home.packages =
         [
-            wallpaper-final
+          wallpaper-final
         ]
         ++ lib.optionals cfg.swww.enable [cfg.swww.package];
     };
