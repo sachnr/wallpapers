@@ -87,10 +87,8 @@ in
     };
 
     config = mkIf cfg.enable {
-      home.packages =
-        [
-          wallpaper-final
-        ]
-        ++ lib.optionals cfg.swww.enable [cfg.swww.package];
+      home.packages = [
+        wallpaper-final
+      ];
     };
   }
